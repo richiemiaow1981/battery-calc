@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>朗泰新能源·孟加拉锂电池出海成本利润测算</title>
+  <!-- PWA & Apple Web App Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="朗泰测算">
+  <link rel="apple-touch-icon" href="icon.png">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      padding: 12px;
+      padding-bottom: 50px;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 顶部导航头 */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      padding: 16px 18px;
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      border-left: 4px solid #3b82f6;
+    }
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .badge {
+      font-size: 11px;
+      background: #2563eb;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+    .header-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    /* 快速型号预设栏 */
+    .preset-section {
+      margin-bottom: 12px;
+    }
+    .preset-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .preset-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .preset-btn {
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid var(--border);
+      padding: 10px 8px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .preset-btn.active {
+      background: #eff6ff;
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    .preset-btn small {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 核心结果浮动大卡片 */
+    .summary-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.25);
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .sum-label { font-size: 12px; color: #bfdbfe; font-weight: 500; }
+    .sum-value { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; margin-top: 3px; }
+    .sum-sub { font-size: 11px; color: #93c5fd; margin-top: 3px; }
+
+    .summary-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #dbeafe;
+    }
+    .summary-footer strong { color: #fff; }
+
+    /* 折叠面板 Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .card-header {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tag-blue { background: #eff6ff; color: #1e40af; }
+    .tag-green { background: #f0fdf4; color: #166534; }
+    .tag-orange { background: #fff7ed; color: #9a3412; }
+
+    /* 表单控件 */
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 11px;
+    }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label {
+      font-size: 13px;
+      color: #334155;
+      flex: 1;
+      padding-right: 8px;
+    }
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 140px;
+    }
+    input[type="number"], select {
+      width: 100%;
+      height: 36px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: right;
+      color: #0f172a;
+      background: #f8fafc;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type="number"]:focus, select:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+    }
+    .unit {
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 24px;
+    }
+
+    /* 内嵌计算指标 */
+    .info-box {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 12px;
+      border: 1px dashed var(--border);
+      font-size: 12px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-label { color: var(--text-muted); }
+    .info-val { font-weight: 600; color: #0f172a; font-variant-numeric: tabular-nums; }
+
+    /* 利润高亮卡 */
+    .profit-card {
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+    }
+    .profit-card.tier1 { background: #fffbeb; border-color: #fef3c7; }
+    .profit-card.tier2 { background: #f0fdf4; border-color: #dcfce7; }
+    .profit-card-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .profit-card-val {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .profit-card-sub {
+      font-size: 11px;
+      margin-top: 2px;
+      color: #475569;
+    }
+
+    .tip {
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 头部信息 -->
+  <header>
+    <div class="header-title">
+      <span>🔋 朗泰新能源·孟加拉电池测算</span>
+      <span class="badge">出海全链</span>
+    </div>
+    <div class="header-desc">多型号通用：朗泰BOM ➔ 退税让利 ➔ 清关到岸 ➔ 孟加拉销售利润</div>
+  </header>
+
+  <!-- 快速切换预设 -->
+  <div class="preset-section">
+    <div class="preset-label">
+      <span>常用电池型号预设 (点击一键载入参数)</span>
+    </div>
+    <div class="preset-bar">
+      <button class="preset-btn active" id="btn-20S105Ah" onclick="loadPreset('20S105Ah')">
+        通用 20S 105Ah
+        <small>6720Wh · 60kg</small>
+      </button>
+      <button class="preset-btn" id="btn-16S102Ah" onclick="loadPreset('16S102Ah')">
+        长天 16S 102Ah
+        <small>5222Wh · 48kg</small>
+      </button>
+      <button class="preset-btn" id="btn-16S122Ah" onclick="loadPreset('16S122Ah')">
+        蜂巢 16S 122Ah
+        <small>6285Wh · 49kg</small>
+      </button>
+      <button class="preset-btn" id="btn-20S164.5Ah" onclick="loadPreset('20S164.5Ah')">
+        国轩 20S 164.5Ah
+        <small>10528Wh · 75kg</small>
+      </button>
+    </div>
+  </div>
+
+  <!-- 顶部核心结果大卡 -->
+  <div class="summary-hero">
+    <div class="summary-grid">
+      <div>
+        <div class="sum-label">孟加拉到岸成本 (BDT)</div>
+        <div class="sum-value" id="hero_landed_bdt">96,442 ৳</div>
+        <div class="sum-sub" id="hero_landed_rmb">约 5,023 元 RMB</div>
+      </div>
+      <div>
+        <div class="sum-label">批发档位1 销售毛利</div>
+        <div class="sum-value" id="hero_profit_1">11,558 ৳</div>
+        <div class="sum-sub" id="hero_profit_1_rmb">+602 元 (毛利 10.7%)</div>
+      </div>
+    </div>
+    <div class="summary-footer">
+      <span>朗泰工厂留利: <strong id="hero_factory_profit">580.0 元</strong></span>
+      <span>双边合并总利: <strong id="hero_consolidated" style="color: #6ee7b7;">约 1,182 元</strong></span>
+    </div>
+  </div>
+
+  <!-- 1. 朗泰工厂 BOM 与采购 -->
+  <div class="card">
+    <div class="card-header">
+      <span>1. 朗泰工厂 BOM 采购成本 (含13%税)</span>
+      <span class="tag tag-blue">朗泰制造</span>
+    </div>
+
+    <div class="form-group">
+      <label>电芯串数 (S) / 单体容量 (Ah)</label>
+      <div class="input-wrap">
+        <input type="number" id="series" value="20" style="width:55px;">
+        <input type="number" id="capacity" value="105" style="width:65px;">
+        <span class="unit">Ah</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>电芯 Wh 单价 (元/Wh)</label>
+      <div class="input-wrap">
+        <input type="number" id="cell_wh_price" value="0.350" step="0.001">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>电芯片单价覆盖 (优先于Wh，选填)</label>
+      <div class="input-wrap">
+        <input type="number" id="cell_piece_override" value="" placeholder="按Wh自动" step="0.01">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>保护板 (蚂蚁GPS / 4G智能板)</label>
+      <div class="input-wrap">
+        <input type="number" id="bms_price" value="350">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>组装加工费 (朗泰PACK产线)</label>
+      <div class="input-wrap">
+        <input type="number" id="assembly_fee" value="200">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>壳体钣金 (含喷涂丝印)</label>
+      <div class="input-wrap">
+        <input type="number" id="case_price" value="150">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>UN危包箱 + 防震隔垫</label>
+      <div class="input-wrap">
+        <input type="number" id="un_box_price" value="50">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>辅材、认证及损耗合价</label>
+      <div class="input-wrap">
+        <input type="number" id="accessories_price" value="150">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-row">
+        <span class="info-label">标称总能量 (Wh)</span>
+        <span class="info-val" id="disp_energy">6,720 Wh</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">电芯采购合价</span>
+        <span class="info-val" id="disp_cell_total">2,352.00 元 (117.60元/片)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">BOM 总成本 (含13%税)</span>
+        <span class="info-val" id="disp_bom_total" style="color: var(--primary);">3,252.00 元</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">进项税额 (抵扣)</span>
+        <span class="info-val" id="disp_vat_input">374.12 元</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 国内定价与出口退税 -->
+  <div class="card">
+    <div class="card-header">
+      <span>2. 朗泰出厂开票 & 出口退税</span>
+      <span class="tag tag-blue">双边转让定价</span>
+    </div>
+
+    <div class="form-group">
+      <label>朗泰出厂含税定价 (Transfer Price)</label>
+      <div class="input-wrap">
+        <input type="number" id="domestic_price" value="4350">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>出口增值税退税政策</label>
+      <div class="input-wrap" style="width: 160px;">
+        <select id="vat_rebate_rate">
+          <option value="0.06" selected>2026年窗口 (6%退税)</option>
+          <option value="0.00">2027年起 (退税归零)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>电芯消费税对冲抵扣</label>
+      <div class="input-wrap" style="width: 160px;">
+        <select id="consumption_rebate_rate">
+          <option value="0.02" selected>2% 对冲免退</option>
+          <option value="0.00">0% 不参与对冲</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-row">
+        <span class="info-label">实缴增值税及附加 (12%)</span>
+        <span class="info-val" id="disp_vat_pay">141.34 元</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">朗泰工厂留利与管理费</span>
+        <span class="info-val" id="disp_domestic_profit" style="color: var(--success);">580.00 元 (13.3%)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">退税总额 (增值税+消费税)</span>
+        <span class="info-val" id="disp_rebate_total">272.58 元</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">出口内部结算价 (退税让利后)</span>
+        <span class="info-val" id="disp_export_transfer" style="color: #1e3a8a; font-weight:700;">4,077.42 元</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 海运、关税与到岸落地 -->
+  <div class="card">
+    <div class="card-header">
+      <span>3. 跨境海运、孟加拉关税与配件</span>
+      <span class="tag tag-orange">清关落地</span>
+    </div>
+
+    <div class="form-group">
+      <label>配套专用充电器 (不含税)</label>
+      <div class="input-wrap">
+        <input type="number" id="charger_price" value="190">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>关税核定净重 (kg) / 含箱总重</label>
+      <div class="input-wrap">
+        <input type="number" id="net_weight" value="56" style="width:65px;">
+        <input type="number" id="gross_weight" value="60" style="width:65px;">
+        <span class="unit">kg</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>40HQ 危险品柜海运全包价</label>
+      <div class="input-wrap">
+        <input type="number" id="container_freight" value="50000">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>孟加拉关税基准 (USD/kg)</label>
+      <div class="input-wrap">
+        <input type="number" id="customs_val_usd" value="3.0" step="0.1">
+        <span class="unit">$</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>美元兑人民币汇率 (USD/CNY)</label>
+      <div class="input-wrap">
+        <input type="number" id="usd_cny_rate" value="6.72" step="0.01">
+        <span class="unit">￥</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>孟加拉海关综合税率 (CD/VAT等)</label>
+      <div class="input-wrap">
+        <input type="number" id="customs_duty_rate" value="0.645" step="0.005">
+        <span class="unit">%</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>人民币兑塔卡汇率 (CNY/BDT)</label>
+      <div class="input-wrap">
+        <input type="number" id="cny_bdt_rate" value="19.20" step="0.1">
+        <span class="unit">৳</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-row">
+        <span class="info-label">单包海运分摊 (按26吨柜限重)</span>
+        <span class="info-val" id="disp_freight">115.38 元</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">孟加拉单包清关关税 (审定计税)</span>
+        <span class="info-val" id="disp_customs">728.18 元</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 终端盈利：批发与租赁 -->
+  <div class="card">
+    <div class="card-header">
+      <span>4. 孟加拉销售与运营模式</span>
+      <span class="tag tag-green">商业变现</span>
+    </div>
+
+    <div class="form-group">
+      <label>批发档位 1 售价 (塔卡)</label>
+      <div class="input-wrap">
+        <input type="number" id="wholesale_1" value="108000" step="1000">
+        <span class="unit">৳</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>批发档位 2 售价 (塔卡)</label>
+      <div class="input-wrap">
+        <input type="number" id="wholesale_2" value="115000" step="1000">
+        <span class="unit">৳</span>
+      </div>
+    </div>
+
+    <!-- 批发利润展示 -->
+    <div class="profit-card tier1">
+      <div class="profit-card-head">
+        <span id="tier1_title">档位 1 销售利润 (108,000 ৳)</span>
+        <span id="tier1_margin_pct">毛利 10.71%</span>
+      </div>
+      <div class="profit-card-val" id="tier1_profit_bdt">11,558 ৳</div>
+      <div class="profit-card-sub" id="tier1_profit_rmb">约 602.00 元 RMB | 双边总利润约 1,182.0 元</div>
+    </div>
+
+    <div class="profit-card tier2">
+      <div class="profit-card-head">
+        <span id="tier2_title">档位 2 销售利润 (115,000 ৳)</span>
+        <span id="tier2_margin_pct">毛利 16.14%</span>
+      </div>
+      <div class="profit-card-val" id="tier2_profit_bdt">18,558 ৳</div>
+      <div class="profit-card-sub" id="tier2_profit_rmb">约 966.56 元 RMB | 双边总利润约 1,546.6 元</div>
+    </div>
+
+    <!-- 租赁模式 -->
+    <div style="margin-top: 16px; border-top: 1px dashed var(--border); padding-top: 14px;">
+      <div style="font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #1e293b;">
+        🔄 租赁/换电运营测算 (Daily Rental)
+      </div>
+
+      <div class="form-group">
+        <label>司机押金 (Deposit)</label>
+        <div class="input-wrap">
+          <input type="number" id="lease_deposit" value="45000" step="1000">
+          <span class="unit">৳</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>每日租金 (Daily Rate)</label>
+        <div class="input-wrap">
+          <input type="number" id="lease_rent" value="120" step="10">
+          <span class="unit">৳</span>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-row">
+          <span class="info-label">硬件净敞口 (到岸成本 - 押金)</span>
+          <span class="info-val" id="disp_lease_exposure">51,442 ৳ (约 2,679 元)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">静态回本周期</span>
+          <span class="info-val" id="disp_lease_payback" style="color: var(--success); font-weight: 700;">429 天 (约 14.1 个月)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip">
+    💡 提示：朗泰新能源内部全链条测算工具 · 支持本地离线与添加到手机桌面
+  </div>
+
+</div>
+
+<script>
+  function getNum(id, fallback = 0) {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    const v = parseFloat(el.value);
+    return isNaN(v) ? fallback : v;
+  }
+
+  function calc() {
+    const series = getNum('series', 20);
+    const capacity = getNum('capacity', 105);
+    const cellWhPrice = getNum('cell_wh_price', 0.35);
+    const cellPieceOverride = getNum('cell_piece_override', 0);
+
+    const bmsPrice = getNum('bms_price', 350);
+    const assemblyFee = getNum('assembly_fee', 200);
+    const casePrice = getNum('case_price', 150);
+    const accessoriesPrice = getNum('accessories_price', 150);
+    const unBoxPrice = getNum('un_box_price', 50);
+
+    const domesticPrice = getNum('domestic_price', 4350);
+    const vatRebateRate = getNum('vat_rebate_rate', 0.06);
+    const consumptionRebateRate = getNum('consumption_rebate_rate', 0.02);
+
+    const chargerPrice = getNum('charger_price', 190);
+    const netWeight = getNum('net_weight', 56);
+    const grossWeight = getNum('gross_weight', 60);
+    const containerFreight = getNum('container_freight', 50000);
+    const containerCapacity = 26000;
+    const customsValUsd = getNum('customs_val_usd', 3.0);
+    const usdCnyRate = getNum('usd_cny_rate', 6.72);
+    const customsDutyRate = getNum('customs_duty_rate', 0.645);
+    const cnyBdtRate = getNum('cny_bdt_rate', 19.20);
+
+    const wholesale1 = getNum('wholesale_1', 108000);
+    const wholesale2 = getNum('wholesale_2', 115000);
+    const leaseDeposit = getNum('lease_deposit', 45000);
+    const leaseRent = getNum('lease_rent', 120);
+
+    // 1. BOM
+    const totalEnergyWh = series * capacity * 3.2;
+    const cellUnitPrice = cellPieceOverride > 0 ? cellPieceOverride : (cellWhPrice * capacity * 3.2);
+    const cellTotal = cellUnitPrice * series;
+    const bomTotal = cellTotal + bmsPrice + assemblyFee + casePrice + accessoriesPrice + unBoxPrice;
+    const vatInput = (bomTotal / 1.13) * 0.13;
+
+    // 2. Factory & Rebates
+    const vatOutput = domesticPrice - (domesticPrice / 1.13);
+    const vatPay = vatOutput - vatInput;
+    const vatSurcharge = vatPay * 1.12;
+    const domesticProfit = domesticPrice - bomTotal - vatSurcharge;
+    const vatRebate = (domesticPrice / 1.13) * vatRebateRate;
+    const consumptionRebate = (cellTotal / 1.13) * consumptionRebateRate;
+    const totalRebate = vatRebate + consumptionRebate;
+    const exportTransferPrice = domesticPrice - totalRebate;
+
+    // 3. Logistics & Customs
+    const freightPerPack = (containerFreight / containerCapacity) * grossWeight;
+    const customsPerPack = netWeight * customsValUsd * usdCnyRate * customsDutyRate;
+    const landedCostRmb = exportTransferPrice + freightPerPack + customsPerPack + chargerPrice;
+    const landedCostBdt = landedCostRmb * cnyBdtRate;
+
+    // 4. Wholesale Margins
+    const profit1Bdt = wholesale1 - landedCostBdt;
+    const profit1Rmb = cnyBdtRate > 0 ? (profit1Bdt / cnyBdtRate) : 0;
+    const margin1Pct = wholesale1 > 0 ? ((profit1Bdt / wholesale1) * 100) : 0;
+
+    const profit2Bdt = wholesale2 - landedCostBdt;
+    const profit2Rmb = cnyBdtRate > 0 ? (profit2Bdt / cnyBdtRate) : 0;
+    const margin2Pct = wholesale2 > 0 ? ((profit2Bdt / wholesale2) * 100) : 0;
+
+    const consolidated1Rmb = domesticProfit + profit1Rmb;
+    const consolidated2Rmb = domesticProfit + profit2Rmb;
+
+    // 5. Leasing
+    const leaseExposure = landedCostBdt - leaseDeposit;
+    const paybackDays = leaseRent > 0 ? (leaseExposure / leaseRent) : 0;
+    const paybackMonths = paybackDays / 30.4;
+
+    // DOM updates
+    document.getElementById('hero_landed_bdt').innerText = `${Math.round(landedCostBdt).toLocaleString()} ৳`;
+    document.getElementById('hero_landed_rmb').innerText = `约 ${landedCostRmb.toFixed(1)} 元 RMB`;
+    document.getElementById('hero_profit_1').innerText = `${Math.round(profit1Bdt).toLocaleString()} ৳`;
+    document.getElementById('hero_profit_1_rmb').innerText = `${profit1Rmb >= 0 ? '+' : ''}${profit1Rmb.toFixed(0)} 元 (${margin1Pct.toFixed(1)}%)`;
+    document.getElementById('hero_factory_profit').innerText = `${domesticProfit.toFixed(1)} 元`;
+    document.getElementById('hero_consolidated').innerText = `约 ${consolidated1Rmb.toFixed(0)} 元`;
+
+    document.getElementById('disp_energy').innerText = `${Math.round(totalEnergyWh).toLocaleString()} Wh`;
+    document.getElementById('disp_cell_total').innerText = `${cellTotal.toFixed(2)} 元 (${cellUnitPrice.toFixed(2)}元/片)`;
+    document.getElementById('disp_bom_total').innerText = `${bomTotal.toFixed(2)} 元`;
+    document.getElementById('disp_vat_input').innerText = `${vatInput.toFixed(2)} 元`;
+
+    document.getElementById('disp_vat_pay').innerText = `${vatSurcharge.toFixed(2)} 元`;
+    document.getElementById('disp_domestic_profit').innerText = `${domesticProfit.toFixed(2)} 元 (${domesticPrice > 0 ? ((domesticProfit/domesticPrice)*100).toFixed(1) : 0}%)`;
+    document.getElementById('disp_rebate_total').innerText = `${totalRebate.toFixed(2)} 元`;
+    document.getElementById('disp_export_transfer').innerText = `${exportTransferPrice.toFixed(2)} 元`;
+
+    document.getElementById('disp_freight').innerText = `${freightPerPack.toFixed(2)} 元`;
+    document.getElementById('disp_customs').innerText = `${customsPerPack.toFixed(2)} 元`;
+
+    document.getElementById('tier1_title').innerText = `档位 1 销售利润 (${wholesale1.toLocaleString()} ৳)`;
+    document.getElementById('tier1_margin_pct').innerText = `毛利 ${margin1Pct.toFixed(2)}%`;
+    document.getElementById('tier1_profit_bdt').innerText = `${Math.round(profit1Bdt).toLocaleString()} ৳`;
+    document.getElementById('tier1_profit_rmb').innerText = `约 ${profit1Rmb.toFixed(2)} 元 RMB | 双边总利润约 ${consolidated1Rmb.toFixed(1)} 元`;
+
+    document.getElementById('tier2_title').innerText = `档位 2 销售利润 (${wholesale2.toLocaleString()} ৳)`;
+    document.getElementById('tier2_margin_pct').innerText = `毛利 ${margin2Pct.toFixed(2)}%`;
+    document.getElementById('tier2_profit_bdt').innerText = `${Math.round(profit2Bdt).toLocaleString()} ৳`;
+    document.getElementById('tier2_profit_rmb').innerText = `约 ${profit2Rmb.toFixed(2)} 元 RMB | 双边总利润约 ${consolidated2Rmb.toFixed(1)} 元`;
+
+    document.getElementById('disp_lease_exposure').innerText = `${Math.round(leaseExposure).toLocaleString()} ৳ (约 ${(cnyBdtRate > 0 ? leaseExposure/cnyBdtRate : 0).toFixed(0)} 元)`;
+    document.getElementById('disp_lease_payback').innerText = `${Math.round(paybackDays)} 天 (约 ${paybackMonths.toFixed(1)} 个月)`;
+  }
+
+  // 严格根据原始 Excel 还原的 4 款预设参数
+  const presets = {
+    // 1. 通用 20S 105Ah (按行业通用BOM基准推算)
+    '20S105Ah': {
+      series: 20, capacity: 105, cell_wh_price: 0.35, cell_piece_override: '',
+      bms_price: 350, assembly_fee: 200, case_price: 150, un_box_price: 50, accessories_price: 150,
+      domestic_price: 4350, charger_price: 190, net_weight: 56, gross_weight: 60,
+      wholesale_1: 108000, wholesale_2: 115000, lease_deposit: 45000, lease_rent: 120
+    },
+    // 2. 长天 16S 102Ah (按《长天16102成本 - 副本.xlsx》)
+    '16S102Ah': {
+      series: 16, capacity: 102, cell_wh_price: 0.395, cell_piece_override: 128.93,
+      bms_price: 320, assembly_fee: 160, case_price: 120, un_box_price: 50, accessories_price: 120,
+      domestic_price: 3350, charger_price: 190, net_weight: 45, gross_weight: 48,
+      wholesale_1: 85000, wholesale_2: 90000, lease_deposit: 35000, lease_rent: 100
+    },
+    // 3. 蜂巢 16S 122Ah (按《蜂巢16122成本测算.xlsx》)
+    // 备注：电芯购买按 120Ah*3.22V*0.337 = 130.22元/片，加工费175，壳体130，辅材130，净重46kg，含箱49kg，批发9.3万/9.5万
+    '16S122Ah': {
+      series: 16, capacity: 122, cell_wh_price: 0.337, cell_piece_override: 130.22,
+      bms_price: 320, assembly_fee: 175, case_price: 130, un_box_price: 50, accessories_price: 130,
+      domestic_price: 3350, charger_price: 190, net_weight: 46, gross_weight: 49,
+      wholesale_1: 93000, wholesale_2: 95000, lease_deposit: 35000, lease_rent: 100
+    },
+    // 4. 国轩 20S 164.5Ah (按《国轩20164.5成本测算.xlsx》)
+    // 备注：电芯 164.5Ah*3.2*0.33 = 173.71元/片(共3474.24)，加工费245，壳体180，辅材+认证+损耗=167，定价5050，净重72kg，含箱75kg，批发12.5万/13万
+    '20S164.5Ah': {
+      series: 20, capacity: 164.5, cell_wh_price: 0.330, cell_piece_override: 173.71,
+      bms_price: 320, assembly_fee: 245, case_price: 180, un_box_price: 50, accessories_price: 167,
+      domestic_price: 5050, charger_price: 190, net_weight: 72, gross_weight: 75,
+      wholesale_1: 125000, wholesale_2: 130000, lease_deposit: 50000, lease_rent: 150
+    }
+  };
+
+  function loadPreset(key) {
+    const data = presets[key];
+    if (!data) return;
+    for (let k in data) {
+      const el = document.getElementById(k);
+      if (el) el.value = data[k];
+    }
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === 'btn-' + key);
+    });
+    calc();
+  }
+
+  // 监听全套输入事件，确保无任何延迟响应
+  ['input', 'change', 'keyup', 'blur'].forEach(evt => {
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener(evt, calc);
+    });
+  });
+
+  calc();
+</script>
+
+</body>
+</html>
