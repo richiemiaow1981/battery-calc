@@ -18,11 +18,12 @@
       --card-bg: #ffffff;
       --text: #0f172a;
       --text-muted: #64748b;
-      --border: #e2e8f0;
+      --border: #cbd5e1;
+      --border-focus: #3b82f6;
       --success: #16a34a;
       --warning: #d97706;
       --danger: #dc2626;
-      --radius: 12px;
+      --radius: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -32,7 +33,7 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       padding: 12px;
-      padding-bottom: 50px;
+      padding-bottom: 70px;
       line-height: 1.4;
     }
 
@@ -41,7 +42,6 @@
       margin: 0 auto;
     }
 
-    /* 顶部导航头 */
     header {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: #fff;
@@ -49,7 +49,7 @@
       border-radius: var(--radius);
       margin-bottom: 12px;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-      border-left: 4px solid #3b82f6;
+      border-left: 5px solid #3b82f6;
     }
     .header-title {
       font-size: 17px;
@@ -72,14 +72,13 @@
       margin-top: 6px;
     }
 
-    /* 快速型号预设栏 */
     .preset-section {
       margin-bottom: 12px;
     }
     .preset-label {
       font-size: 12px;
-      font-weight: 600;
-      color: #475569;
+      font-weight: 700;
+      color: #334155;
       margin-bottom: 6px;
       display: flex;
       justify-content: space-between;
@@ -92,15 +91,15 @@
     .preset-btn {
       background: #ffffff;
       color: #334155;
-      border: 1px solid var(--border);
+      border: 1.5px solid #cbd5e1;
       padding: 10px 8px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       text-align: center;
       transition: all 0.2s;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
     .preset-btn.active {
       background: #eff6ff;
@@ -111,12 +110,56 @@
     .preset-btn small {
       display: block;
       font-size: 11px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--text-muted);
       margin-top: 2px;
     }
 
-    /* 核心结果浮动大卡片 */
+    /* 撤销 / 重做 / 重置 操作栏 */
+    .action-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .action-btn:hover:not(:disabled) {
+      background: #e2e8f0;
+    }
+    .action-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+    }
+    .action-btn.reset-btn {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fecaca;
+      margin-left: auto;
+    }
+    .action-btn.reset-btn:hover {
+      background: #fecaca;
+    }
+
     .summary-hero {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       color: white;
@@ -129,36 +172,35 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.25);
       padding-bottom: 12px;
       margin-bottom: 12px;
     }
-    .sum-label { font-size: 12px; color: #bfdbfe; font-weight: 500; }
-    .sum-value { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; margin-top: 3px; }
-    .sum-sub { font-size: 11px; color: #93c5fd; margin-top: 3px; }
+    .sum-label { font-size: 12px; color: #bfdbfe; font-weight: 600; }
+    .sum-value { font-size: 23px; font-weight: 800; font-variant-numeric: tabular-nums; margin-top: 3px; }
+    .sum-sub { font-size: 11px; color: #93c5fd; margin-top: 3px; font-weight: 500; }
 
     .summary-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 12px;
+      font-size: 13px;
       color: #dbeafe;
     }
-    .summary-footer strong { color: #fff; }
+    .summary-footer strong { color: #fff; font-size: 14px; }
 
-    /* 折叠面板 Card */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      border: 1px solid var(--border);
+      border: 1px solid #cbd5e1;
       padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      margin-bottom: 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
     .card-header {
       font-size: 14px;
       font-weight: 700;
-      color: #1e293b;
+      color: #0f172a;
       margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
@@ -166,109 +208,138 @@
     }
     .tag {
       font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
     }
-    .tag-blue { background: #eff6ff; color: #1e40af; }
-    .tag-green { background: #f0fdf4; color: #166534; }
-    .tag-orange { background: #fff7ed; color: #9a3412; }
+    .tag-blue { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .tag-orange { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+    .tag-green { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
 
-    /* 表单控件 */
     .form-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 11px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
     }
-    .form-group:last-child { margin-bottom: 0; }
+    .form-group:last-child { margin-bottom: 0; padding-bottom: 0; }
     .form-group label {
       font-size: 13px;
+      font-weight: 600;
       color: #334155;
       flex: 1;
       padding-right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
+    .edit-icon {
+      color: #2563eb;
+      font-size: 11px;
+      font-weight: normal;
+      background: #eff6ff;
+      padding: 1px 4px;
+      border-radius: 4px;
+      border: 1px solid #dbeafe;
+    }
+
     .input-wrap {
       display: flex;
       align-items: center;
       gap: 6px;
       width: 140px;
     }
+    
     input[type="number"], select {
       width: 100%;
-      height: 36px;
+      height: 38px;
       padding: 4px 8px;
-      border: 1px solid var(--border);
+      border: 1.5px solid #94a3b8;
       border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
       text-align: right;
       color: #0f172a;
-      background: #f8fafc;
+      background: #ffffff;
       outline: none;
       -webkit-appearance: none;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+      transition: border 0.15s, box-shadow 0.15s;
     }
     input[type="number"]:focus, select:focus {
-      border-color: var(--primary);
-      background: #fff;
-      box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+      border-color: #2563eb;
+      background: #f0f7ff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
     }
     .unit {
       font-size: 12px;
       color: var(--text-muted);
       min-width: 24px;
+      font-weight: 600;
     }
 
-    /* 内嵌计算指标 */
     .info-box {
       background: #f8fafc;
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-top: 12px;
-      border: 1px dashed var(--border);
-      font-size: 12px;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 13px;
     }
     .info-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 5px;
+      align-items: center;
+      margin-bottom: 7px;
     }
     .info-row:last-child { margin-bottom: 0; }
-    .info-label { color: var(--text-muted); }
-    .info-val { font-weight: 600; color: #0f172a; font-variant-numeric: tabular-nums; }
-
-    /* 利润高亮卡 */
-    .profit-card {
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 10px;
-      border: 1px solid var(--border);
+    .info-label { color: #475569; font-weight: 500; }
+    
+    .info-val {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
     }
-    .profit-card.tier1 { background: #fffbeb; border-color: #fef3c7; }
-    .profit-card.tier2 { background: #f0fdf4; border-color: #dcfce7; }
+    .info-val.highlight-lg {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .profit-card {
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 10px;
+      border: 1.5px solid;
+    }
+    .profit-card.tier1 { background: #fefce8; border-color: #fde047; }
+    .profit-card.tier2 { background: #f0fdf4; border-color: #86efac; }
     .profit-card-head {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
       margin-bottom: 4px;
     }
     .profit-card-val {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       color: #0f172a;
     }
     .profit-card-sub {
-      font-size: 11px;
-      margin-top: 2px;
+      font-size: 12px;
+      margin-top: 3px;
       color: #475569;
+      font-weight: 600;
     }
 
     .tip {
-      font-size: 11px;
+      font-size: 12px;
       color: #94a3b8;
       text-align: center;
-      margin-top: 20px;
+      margin-top: 24px;
       line-height: 1.5;
     }
   </style>
@@ -277,7 +348,6 @@
 
 <div class="container">
 
-  <!-- 头部信息 -->
   <header>
     <div class="header-title">
       <span>🔋 朗泰新能源·孟加拉电池测算</span>
@@ -286,10 +356,10 @@
     <div class="header-desc">多型号通用：朗泰BOM ➔ 退税让利 ➔ 清关到岸 ➔ 孟加拉销售利润</div>
   </header>
 
-  <!-- 快速切换预设 -->
   <div class="preset-section">
     <div class="preset-label">
       <span>常用电池型号预设 (点击一键载入参数)</span>
+      <span style="font-weight: normal; color: var(--text-muted);">白底框为可修改项</span>
     </div>
     <div class="preset-bar">
       <button class="preset-btn active" id="btn-20S105Ah" onclick="loadPreset('20S105Ah')">
@@ -311,7 +381,20 @@
     </div>
   </div>
 
-  <!-- 顶部核心结果大卡 -->
+  <div class="action-toolbar">
+    <div style="display: flex; gap: 6px;">
+      <button class="action-btn" id="btn-undo" onclick="undo()" disabled title="撤销上一次修改">
+        ↩ 撤回
+      </button>
+      <button class="action-btn" id="btn-redo" onclick="redo()" disabled title="重做下一步">
+        ↪ 下一步
+      </button>
+    </div>
+    <button class="action-btn reset-btn" onclick="resetCurrentPreset()" title="恢复当前型号出厂原始参数">
+      ↺ 重置当前型号
+    </button>
+  </div>
+
   <div class="summary-hero">
     <div class="summary-grid">
       <div>
@@ -327,11 +410,10 @@
     </div>
     <div class="summary-footer">
       <span>朗泰工厂留利: <strong id="hero_factory_profit">580.0 元</strong></span>
-      <span>双边合并总利: <strong id="hero_consolidated" style="color: #6ee7b7;">约 1,182 元</strong></span>
+      <span>双边合并总利: <strong id="hero_consolidated" style="color: #6ee7b7; font-weight:800; font-size:15px;">约 1,182 元</strong></span>
     </div>
   </div>
 
-  <!-- 1. 朗泰工厂 BOM 与采购 -->
   <div class="card">
     <div class="card-header">
       <span>1. 朗泰工厂 BOM 采购成本 (含13%税)</span>
@@ -339,7 +421,7 @@
     </div>
 
     <div class="form-group">
-      <label>电芯串数 (S) / 单体容量 (Ah)</label>
+      <label>电芯串数 (S) / 单体容量 (Ah) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="series" value="20" style="width:55px;">
         <input type="number" id="capacity" value="105" style="width:65px;">
@@ -348,7 +430,7 @@
     </div>
 
     <div class="form-group">
-      <label>电芯 Wh 单价 (元/Wh)</label>
+      <label>电芯 Wh 单价 (元/Wh) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="cell_wh_price" value="0.350" step="0.001">
         <span class="unit">元</span>
@@ -356,7 +438,7 @@
     </div>
 
     <div class="form-group">
-      <label>电芯片单价覆盖 (优先于Wh，选填)</label>
+      <label>电芯片单价覆盖 (优先于Wh，选填) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="cell_piece_override" value="" placeholder="按Wh自动" step="0.01">
         <span class="unit">元</span>
@@ -364,7 +446,7 @@
     </div>
 
     <div class="form-group">
-      <label>保护板 (蚂蚁GPS / 4G智能板)</label>
+      <label>保护板 (蚂蚁GPS / 4G智能板) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="bms_price" value="350">
         <span class="unit">元</span>
@@ -372,7 +454,7 @@
     </div>
 
     <div class="form-group">
-      <label>组装加工费 (朗泰PACK产线)</label>
+      <label>组装加工费 (朗泰PACK产线) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="assembly_fee" value="200">
         <span class="unit">元</span>
@@ -380,7 +462,7 @@
     </div>
 
     <div class="form-group">
-      <label>壳体钣金 (含喷涂丝印)</label>
+      <label>壳体钣金 (含喷涂丝印) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="case_price" value="150">
         <span class="unit">元</span>
@@ -388,7 +470,7 @@
     </div>
 
     <div class="form-group">
-      <label>UN危包箱 + 防震隔垫</label>
+      <label>UN危包箱 + 防震隔垫 <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="un_box_price" value="50">
         <span class="unit">元</span>
@@ -396,7 +478,7 @@
     </div>
 
     <div class="form-group">
-      <label>辅材、认证及损耗合价</label>
+      <label>辅材、认证及损耗合价 <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="accessories_price" value="150">
         <span class="unit">元</span>
@@ -405,25 +487,24 @@
 
     <div class="info-box">
       <div class="info-row">
-        <span class="info-label">标称总能量 (Wh)</span>
-        <span class="info-val" id="disp_energy">6,720 Wh</span>
+        <span class="info-label">标称总能量</span>
+        <span class="info-val highlight-lg" id="disp_energy" style="color: #1e3a8a;">6,720 Wh</span>
       </div>
       <div class="info-row">
         <span class="info-label">电芯采购合价</span>
         <span class="info-val" id="disp_cell_total">2,352.00 元 (117.60元/片)</span>
       </div>
-      <div class="info-row">
-        <span class="info-label">BOM 总成本 (含13%税)</span>
-        <span class="info-val" id="disp_bom_total" style="color: var(--primary);">3,252.00 元</span>
+      <div class="info-row" style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 4px;">
+        <span class="info-label" style="font-weight: 700; color: #1e293b;">★ BOM 总成本 (含13%税)</span>
+        <span class="info-val highlight-lg" id="disp_bom_total" style="color: #2563eb;">3,252.00 元</span>
       </div>
       <div class="info-row">
         <span class="info-label">进项税额 (抵扣)</span>
-        <span class="info-val" id="disp_vat_input">374.12 元</span>
+        <span class="info-val" id="disp_vat_input" style="color: #059669;">374.12 元</span>
       </div>
     </div>
   </div>
 
-  <!-- 2. 国内定价与出口退税 -->
   <div class="card">
     <div class="card-header">
       <span>2. 朗泰出厂开票 & 出口退税</span>
@@ -431,7 +512,7 @@
     </div>
 
     <div class="form-group">
-      <label>朗泰出厂含税定价 (Transfer Price)</label>
+      <label>朗泰出厂含税定价 (Transfer Price) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="domestic_price" value="4350">
         <span class="unit">元</span>
@@ -439,7 +520,7 @@
     </div>
 
     <div class="form-group">
-      <label>出口增值税退税政策</label>
+      <label>出口增值税退税政策 <span class="edit-icon">改</span></label>
       <div class="input-wrap" style="width: 160px;">
         <select id="vat_rebate_rate">
           <option value="0.06" selected>2026年窗口 (6%退税)</option>
@@ -449,7 +530,7 @@
     </div>
 
     <div class="form-group">
-      <label>电芯消费税对冲抵扣</label>
+      <label>电芯消费税对冲抵扣 <span class="edit-icon">改</span></label>
       <div class="input-wrap" style="width: 160px;">
         <select id="consumption_rebate_rate">
           <option value="0.02" selected>2% 对冲免退</option>
@@ -463,22 +544,21 @@
         <span class="info-label">实缴增值税及附加 (12%)</span>
         <span class="info-val" id="disp_vat_pay">141.34 元</span>
       </div>
-      <div class="info-row">
-        <span class="info-label">朗泰工厂留利与管理费</span>
-        <span class="info-val" id="disp_domestic_profit" style="color: var(--success);">580.00 元 (13.3%)</span>
+      <div class="info-row" style="background: #f0fdf4; padding: 4px 6px; border-radius: 6px; margin: 4px -6px;">
+        <span class="info-label" style="color: #166534; font-weight:700;">★ 朗泰工厂留利与管理费</span>
+        <span class="info-val highlight-lg" id="disp_domestic_profit" style="color: #16a34a;">580.00 元 (13.3%)</span>
       </div>
       <div class="info-row">
         <span class="info-label">退税总额 (增值税+消费税)</span>
-        <span class="info-val" id="disp_rebate_total">272.58 元</span>
+        <span class="info-val" id="disp_rebate_total" style="color: #0284c7;">272.58 元</span>
       </div>
-      <div class="info-row">
-        <span class="info-label">出口内部结算价 (退税让利后)</span>
-        <span class="info-val" id="disp_export_transfer" style="color: #1e3a8a; font-weight:700;">4,077.42 元</span>
+      <div class="info-row" style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 4px;">
+        <span class="info-label" style="color: #1e3a8a; font-weight:700;">出口内部结算价 (退税让利后)</span>
+        <span class="info-val highlight-lg" id="disp_export_transfer" style="color: #1e3a8a;">4,077.42 元</span>
       </div>
     </div>
   </div>
 
-  <!-- 3. 海运、关税与到岸落地 -->
   <div class="card">
     <div class="card-header">
       <span>3. 跨境海运、孟加拉关税与配件</span>
@@ -486,7 +566,7 @@
     </div>
 
     <div class="form-group">
-      <label>配套专用充电器 (不含税)</label>
+      <label>配套专用充电器 (不含税) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="charger_price" value="190">
         <span class="unit">元</span>
@@ -494,7 +574,7 @@
     </div>
 
     <div class="form-group">
-      <label>关税核定净重 (kg) / 含箱总重</label>
+      <label>关税核定净重 (kg) / 含箱总重 <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="net_weight" value="56" style="width:65px;">
         <input type="number" id="gross_weight" value="60" style="width:65px;">
@@ -503,7 +583,7 @@
     </div>
 
     <div class="form-group">
-      <label>40HQ 危险品柜海运全包价</label>
+      <label>40HQ 危险品柜海运全包价 <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="container_freight" value="50000">
         <span class="unit">元</span>
@@ -511,7 +591,7 @@
     </div>
 
     <div class="form-group">
-      <label>孟加拉关税基准 (USD/kg)</label>
+      <label>孟加拉关税基准 (USD/kg) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="customs_val_usd" value="3.0" step="0.1">
         <span class="unit">$</span>
@@ -519,7 +599,7 @@
     </div>
 
     <div class="form-group">
-      <label>美元兑人民币汇率 (USD/CNY)</label>
+      <label>美元兑人民币汇率 (USD/CNY) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="usd_cny_rate" value="6.72" step="0.01">
         <span class="unit">￥</span>
@@ -527,7 +607,7 @@
     </div>
 
     <div class="form-group">
-      <label>孟加拉海关综合税率 (CD/VAT等)</label>
+      <label>孟加拉海关综合税率 (CD/VAT等) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="customs_duty_rate" value="0.645" step="0.005">
         <span class="unit">%</span>
@@ -535,7 +615,7 @@
     </div>
 
     <div class="form-group">
-      <label>人民币兑塔卡汇率 (CNY/BDT)</label>
+      <label>人民币兑塔卡汇率 (CNY/BDT) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="cny_bdt_rate" value="19.20" step="0.1">
         <span class="unit">৳</span>
@@ -549,12 +629,11 @@
       </div>
       <div class="info-row">
         <span class="info-label">孟加拉单包清关关税 (审定计税)</span>
-        <span class="info-val" id="disp_customs">728.18 元</span>
+        <span class="info-val highlight-lg" id="disp_customs" style="color: #ea580c;">728.18 元</span>
       </div>
     </div>
   </div>
 
-  <!-- 4. 终端盈利：批发与租赁 -->
   <div class="card">
     <div class="card-header">
       <span>4. 孟加拉销售与运营模式</span>
@@ -562,7 +641,7 @@
     </div>
 
     <div class="form-group">
-      <label>批发档位 1 售价 (塔卡)</label>
+      <label>批发档位 1 售价 (塔卡) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="wholesale_1" value="108000" step="1000">
         <span class="unit">৳</span>
@@ -570,40 +649,38 @@
     </div>
 
     <div class="form-group">
-      <label>批发档位 2 售价 (塔卡)</label>
+      <label>批发档位 2 售价 (塔卡) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
         <input type="number" id="wholesale_2" value="115000" step="1000">
         <span class="unit">৳</span>
       </div>
     </div>
 
-    <!-- 批发利润展示 -->
     <div class="profit-card tier1">
       <div class="profit-card-head">
         <span id="tier1_title">档位 1 销售利润 (108,000 ৳)</span>
-        <span id="tier1_margin_pct">毛利 10.71%</span>
+        <span id="tier1_margin_pct" style="color: #b45309; font-weight:800;">毛利 10.71%</span>
       </div>
-      <div class="profit-card-val" id="tier1_profit_bdt">11,558 ৳</div>
+      <div class="profit-card-val" id="tier1_profit_bdt" style="color: #92400e;">11,558 ৳</div>
       <div class="profit-card-sub" id="tier1_profit_rmb">约 602.00 元 RMB | 双边总利润约 1,182.0 元</div>
     </div>
 
     <div class="profit-card tier2">
       <div class="profit-card-head">
         <span id="tier2_title">档位 2 销售利润 (115,000 ৳)</span>
-        <span id="tier2_margin_pct">毛利 16.14%</span>
+        <span id="tier2_margin_pct" style="color: #15803d; font-weight:800;">毛利 16.14%</span>
       </div>
-      <div class="profit-card-val" id="tier2_profit_bdt">18,558 ৳</div>
+      <div class="profit-card-val" id="tier2_profit_bdt" style="color: #166534;">18,558 ৳</div>
       <div class="profit-card-sub" id="tier2_profit_rmb">约 966.56 元 RMB | 双边总利润约 1,546.6 元</div>
     </div>
 
-    <!-- 租赁模式 -->
-    <div style="margin-top: 16px; border-top: 1px dashed var(--border); padding-top: 14px;">
+    <div style="margin-top: 16px; border-top: 1px dashed #cbd5e1; padding-top: 14px;">
       <div style="font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #1e293b;">
         🔄 租赁/换电运营测算 (Daily Rental)
       </div>
 
       <div class="form-group">
-        <label>司机押金 (Deposit)</label>
+        <label>司机押金 (Deposit) <span class="edit-icon">改</span></label>
         <div class="input-wrap">
           <input type="number" id="lease_deposit" value="45000" step="1000">
           <span class="unit">৳</span>
@@ -611,7 +688,7 @@
       </div>
 
       <div class="form-group">
-        <label>每日租金 (Daily Rate)</label>
+        <label>每日租金 (Daily Rate) <span class="edit-icon">改</span></label>
         <div class="input-wrap">
           <input type="number" id="lease_rent" value="120" step="10">
           <span class="unit">৳</span>
@@ -621,11 +698,11 @@
       <div class="info-box">
         <div class="info-row">
           <span class="info-label">硬件净敞口 (到岸成本 - 押金)</span>
-          <span class="info-val" id="disp_lease_exposure">51,442 ৳ (约 2,679 元)</span>
+          <span class="info-val highlight-lg" id="disp_lease_exposure">51,442 ৳ (约 2,679 元)</span>
         </div>
         <div class="info-row">
           <span class="info-label">静态回本周期</span>
-          <span class="info-val" id="disp_lease_payback" style="color: var(--success); font-weight: 700;">429 天 (约 14.1 个月)</span>
+          <span class="info-val highlight-lg" id="disp_lease_payback" style="color: var(--success); font-weight: 800;">429 天 (约 14.1 个月)</span>
         </div>
       </div>
     </div>
@@ -633,12 +710,133 @@
   </div>
 
   <div class="tip">
-    💡 提示：朗泰新能源内部全链条测算工具 · 支持本地离线与添加到手机桌面
+    💡 提示：朗泰新能源内部全链条测算工具 · 支持离线计算与实时历史回撤
   </div>
 
 </div>
 
 <script>
+  const inputIds = [
+    'series', 'capacity', 'cell_wh_price', 'cell_piece_override',
+    'bms_price', 'assembly_fee', 'case_price', 'un_box_price', 'accessories_price',
+    'domestic_price', 'vat_rebate_rate', 'consumption_rebate_rate',
+    'charger_price', 'net_weight', 'gross_weight', 'container_freight',
+    'customs_val_usd', 'usd_cny_rate', 'customs_duty_rate', 'cny_bdt_rate',
+    'wholesale_1', 'wholesale_2', 'lease_deposit', 'lease_rent'
+  ];
+
+  const presets = {
+    '20S105Ah': {
+      series: 20, capacity: 105, cell_wh_price: 0.35, cell_piece_override: '',
+      bms_price: 350, assembly_fee: 200, case_price: 150, un_box_price: 50, accessories_price: 150,
+      domestic_price: 4350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      charger_price: 190, net_weight: 56, gross_weight: 60, container_freight: 50000,
+      customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
+      wholesale_1: 108000, wholesale_2: 115000, lease_deposit: 45000, lease_rent: 120
+    },
+    '16S102Ah': {
+      series: 16, capacity: 102, cell_wh_price: 0.395, cell_piece_override: 128.93,
+      bms_price: 320, assembly_fee: 160, case_price: 120, un_box_price: 50, accessories_price: 120,
+      domestic_price: 3350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      charger_price: 190, net_weight: 45, gross_weight: 48, container_freight: 50000,
+      customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
+      wholesale_1: 85000, wholesale_2: 90000, lease_deposit: 35000, lease_rent: 100
+    },
+    '16S122Ah': {
+      series: 16, capacity: 122, cell_wh_price: 0.337, cell_piece_override: 130.22,
+      bms_price: 320, assembly_fee: 175, case_price: 130, un_box_price: 50, accessories_price: 130,
+      domestic_price: 3350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      charger_price: 190, net_weight: 46, gross_weight: 49, container_freight: 50000,
+      customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
+      wholesale_1: 93000, wholesale_2: 95000, lease_deposit: 35000, lease_rent: 100
+    },
+    '20S164.5Ah': {
+      series: 20, capacity: 164.5, cell_wh_price: 0.330, cell_piece_override: 173.71,
+      bms_price: 320, assembly_fee: 245, case_price: 180, un_box_price: 50, accessories_price: 167,
+      domestic_price: 5050, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      charger_price: 190, net_weight: 72, gross_weight: 75, container_freight: 50000,
+      customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
+      wholesale_1: 125000, wholesale_2: 130000, lease_deposit: 50000, lease_rent: 150
+    }
+  };
+
+  let currentPresetKey = '20S105Ah';
+  let historyStack = [];
+  let historyIndex = -1;
+  const MAX_HISTORY = 40;
+  let isInternalChange = false;
+
+  function getCurrentState() {
+    const state = { presetKey: currentPresetKey, values: {} };
+    inputIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) state.values[id] = el.value;
+    });
+    return state;
+  }
+
+  function applyState(state) {
+    isInternalChange = true;
+    currentPresetKey = state.presetKey;
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === 'btn-' + currentPresetKey);
+    });
+    for (let id in state.values) {
+      const el = document.getElementById(id);
+      if (el) el.value = state.values[id];
+    }
+    calcCore();
+    isInternalChange = false;
+    updateToolbarButtons();
+  }
+
+  function pushState() {
+    if (isInternalChange) return;
+    const currentState = getCurrentState();
+    if (historyIndex >= 0) {
+      const prev = historyStack[historyIndex];
+      let isSame = true;
+      for (let id of inputIds) {
+        if (prev.values[id] !== currentState.values[id]) {
+          isSame = false;
+          break;
+        }
+      }
+      if (isSame && prev.presetKey === currentState.presetKey) return;
+    }
+
+    historyStack = historyStack.slice(0, historyIndex + 1);
+    historyStack.push(currentState);
+    if (historyStack.length > MAX_HISTORY) historyStack.shift();
+    historyIndex = historyStack.length - 1;
+    updateToolbarButtons();
+  }
+
+  function undo() {
+    if (historyIndex > 0) {
+      historyIndex--;
+      applyState(historyStack[historyIndex]);
+    }
+  }
+
+  function redo() {
+    if (historyIndex < historyStack.length - 1) {
+      historyIndex++;
+      applyState(historyStack[historyIndex]);
+    }
+  }
+
+  function updateToolbarButtons() {
+    const btnUndo = document.getElementById('btn-undo');
+    const btnRedo = document.getElementById('btn-redo');
+    if (btnUndo) btnUndo.disabled = (historyIndex <= 0);
+    if (btnRedo) btnRedo.disabled = (historyIndex >= historyStack.length - 1);
+  }
+
+  function resetCurrentPreset() {
+    loadPreset(currentPresetKey, true);
+  }
+
   function getNum(id, fallback = 0) {
     const el = document.getElementById(id);
     if (!el) return fallback;
@@ -646,7 +844,7 @@
     return isNaN(v) ? fallback : v;
   }
 
-  function calc() {
+  function calcCore() {
     const series = getNum('series', 20);
     const capacity = getNum('capacity', 105);
     const cellWhPrice = getNum('cell_wh_price', 0.35);
@@ -677,14 +875,12 @@
     const leaseDeposit = getNum('lease_deposit', 45000);
     const leaseRent = getNum('lease_rent', 120);
 
-    // 1. BOM
     const totalEnergyWh = series * capacity * 3.2;
     const cellUnitPrice = cellPieceOverride > 0 ? cellPieceOverride : (cellWhPrice * capacity * 3.2);
     const cellTotal = cellUnitPrice * series;
     const bomTotal = cellTotal + bmsPrice + assemblyFee + casePrice + accessoriesPrice + unBoxPrice;
     const vatInput = (bomTotal / 1.13) * 0.13;
 
-    // 2. Factory & Rebates
     const vatOutput = domesticPrice - (domesticPrice / 1.13);
     const vatPay = vatOutput - vatInput;
     const vatSurcharge = vatPay * 1.12;
@@ -694,13 +890,11 @@
     const totalRebate = vatRebate + consumptionRebate;
     const exportTransferPrice = domesticPrice - totalRebate;
 
-    // 3. Logistics & Customs
     const freightPerPack = (containerFreight / containerCapacity) * grossWeight;
     const customsPerPack = netWeight * customsValUsd * usdCnyRate * customsDutyRate;
     const landedCostRmb = exportTransferPrice + freightPerPack + customsPerPack + chargerPrice;
     const landedCostBdt = landedCostRmb * cnyBdtRate;
 
-    // 4. Wholesale Margins
     const profit1Bdt = wholesale1 - landedCostBdt;
     const profit1Rmb = cnyBdtRate > 0 ? (profit1Bdt / cnyBdtRate) : 0;
     const margin1Pct = wholesale1 > 0 ? ((profit1Bdt / wholesale1) * 100) : 0;
@@ -712,12 +906,10 @@
     const consolidated1Rmb = domesticProfit + profit1Rmb;
     const consolidated2Rmb = domesticProfit + profit2Rmb;
 
-    // 5. Leasing
     const leaseExposure = landedCostBdt - leaseDeposit;
     const paybackDays = leaseRent > 0 ? (leaseExposure / leaseRent) : 0;
     const paybackMonths = paybackDays / 30.4;
 
-    // DOM updates
     document.getElementById('hero_landed_bdt').innerText = `${Math.round(landedCostBdt).toLocaleString()} ৳`;
     document.getElementById('hero_landed_rmb').innerText = `约 ${landedCostRmb.toFixed(1)} 元 RMB`;
     document.getElementById('hero_profit_1').innerText = `${Math.round(profit1Bdt).toLocaleString()} ৳`;
@@ -752,43 +944,11 @@
     document.getElementById('disp_lease_payback').innerText = `${Math.round(paybackDays)} 天 (约 ${paybackMonths.toFixed(1)} 个月)`;
   }
 
-  // 严格根据原始 Excel 还原的 4 款预设参数
-  const presets = {
-    // 1. 通用 20S 105Ah (按行业通用BOM基准推算)
-    '20S105Ah': {
-      series: 20, capacity: 105, cell_wh_price: 0.35, cell_piece_override: '',
-      bms_price: 350, assembly_fee: 200, case_price: 150, un_box_price: 50, accessories_price: 150,
-      domestic_price: 4350, charger_price: 190, net_weight: 56, gross_weight: 60,
-      wholesale_1: 108000, wholesale_2: 115000, lease_deposit: 45000, lease_rent: 120
-    },
-    // 2. 长天 16S 102Ah (按《长天16102成本 - 副本.xlsx》)
-    '16S102Ah': {
-      series: 16, capacity: 102, cell_wh_price: 0.395, cell_piece_override: 128.93,
-      bms_price: 320, assembly_fee: 160, case_price: 120, un_box_price: 50, accessories_price: 120,
-      domestic_price: 3350, charger_price: 190, net_weight: 45, gross_weight: 48,
-      wholesale_1: 85000, wholesale_2: 90000, lease_deposit: 35000, lease_rent: 100
-    },
-    // 3. 蜂巢 16S 122Ah (按《蜂巢16122成本测算.xlsx》)
-    // 备注：电芯购买按 120Ah*3.22V*0.337 = 130.22元/片，加工费175，壳体130，辅材130，净重46kg，含箱49kg，批发9.3万/9.5万
-    '16S122Ah': {
-      series: 16, capacity: 122, cell_wh_price: 0.337, cell_piece_override: 130.22,
-      bms_price: 320, assembly_fee: 175, case_price: 130, un_box_price: 50, accessories_price: 130,
-      domestic_price: 3350, charger_price: 190, net_weight: 46, gross_weight: 49,
-      wholesale_1: 93000, wholesale_2: 95000, lease_deposit: 35000, lease_rent: 100
-    },
-    // 4. 国轩 20S 164.5Ah (按《国轩20164.5成本测算.xlsx》)
-    // 备注：电芯 164.5Ah*3.2*0.33 = 173.71元/片(共3474.24)，加工费245，壳体180，辅材+认证+损耗=167，定价5050，净重72kg，含箱75kg，批发12.5万/13万
-    '20S164.5Ah': {
-      series: 20, capacity: 164.5, cell_wh_price: 0.330, cell_piece_override: 173.71,
-      bms_price: 320, assembly_fee: 245, case_price: 180, un_box_price: 50, accessories_price: 167,
-      domestic_price: 5050, charger_price: 190, net_weight: 72, gross_weight: 75,
-      wholesale_1: 125000, wholesale_2: 130000, lease_deposit: 50000, lease_rent: 150
-    }
-  };
-
-  function loadPreset(key) {
+  function loadPreset(key, isReset = false) {
     const data = presets[key];
     if (!data) return;
+    currentPresetKey = key;
+    isInternalChange = true;
     for (let k in data) {
       const el = document.getElementById(k);
       if (el) el.value = data[k];
@@ -796,17 +956,30 @@
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.classList.toggle('active', btn.id === 'btn-' + key);
     });
-    calc();
+    calcCore();
+    isInternalChange = false;
+    pushState();
   }
 
-  // 监听全套输入事件，确保无任何延迟响应
-  ['input', 'change', 'keyup', 'blur'].forEach(evt => {
-    document.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener(evt, calc);
-    });
+  let debounceTimer = null;
+  function handleInput() {
+    calcCore();
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      pushState();
+    }, 400);
+  }
+
+  inputIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', handleInput);
+      el.addEventListener('change', handleInput);
+    }
   });
 
-  calc();
+  calcCore();
+  pushState();
 </script>
 
 </body>
