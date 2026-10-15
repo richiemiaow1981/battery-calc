@@ -540,20 +540,42 @@
     </div>
 
     <div class="info-box">
+      <!-- 销项税与进项税抵扣 -->
       <div class="info-row">
-        <span class="info-label">实缴增值税及附加 (12%)</span>
-        <span class="info-val" id="disp_vat_pay">141.34 元</span>
-      </div>
-      <div class="info-row" style="background: #f0fdf4; padding: 4px 6px; border-radius: 6px; margin: 4px -6px;">
-        <span class="info-label" style="color: #166534; font-weight:700;">★ 朗泰工厂留利与管理费</span>
-        <span class="info-val highlight-lg" id="disp_domestic_profit" style="color: #16a34a;">580.00 元 (13.3%)</span>
+        <span class="info-label">① 销项税额 [定价 ÷ 1.13 × 13%]</span>
+        <span class="info-val" id="disp_vat_output" style="color: #475569;">500.44 元</span>
       </div>
       <div class="info-row">
-        <span class="info-label">退税总额 (增值税+消费税)</span>
+        <span class="info-label">② 进项税额 [BOM总成本进项]</span>
+        <span class="info-val" id="disp_vat_input_tax" style="color: #475569;">-374.12 元</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">③ 应缴增值税 [①销项 - ②进项]</span>
+        <span class="info-val" id="disp_vat_diff" style="color: #2563eb; font-weight:700;">126.32 元</span>
+      </div>
+      <div class="info-row" style="background: #eff6ff; padding: 4px 6px; border-radius: 6px; margin: 3px -6px;">
+        <span class="info-label" style="color: #1e40af; font-weight:600;">★ 实缴增值税及附加 [③增值税 × 1.12 (含12%城建/教育附加)]</span>
+        <span class="info-val highlight-lg" id="disp_vat_pay" style="color: #1d4ed8;">141.48 元</span>
+      </div>
+
+      <!-- 朗泰工厂留利清晰公式 -->
+      <div class="info-row" style="background: #f0fdf4; padding: 6px 8px; border-radius: 8px; margin: 8px -6px 6px -6px; border: 1px solid #bbf7d0;">
+        <div>
+          <div style="color: #166534; font-weight:800; font-size:13px;">★ 朗泰工厂留利与管理费</div>
+          <div style="font-size: 11px; color: #15803d; margin-top: 2px;">公式: 出厂定价 - BOM成本 - 实缴税费附加</div>
+        </div>
+        <span class="info-val highlight-lg" id="disp_domestic_profit" style="color: #16a34a; font-size: 17px;">580.00 元 (13.3%)</span>
+      </div>
+
+      <div class="info-row" style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 6px;">
+        <span class="info-label">退税总额 [退增值税6% + 消费税2%]</span>
         <span class="info-val" id="disp_rebate_total" style="color: #0284c7;">272.58 元</span>
       </div>
-      <div class="info-row" style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 4px;">
-        <span class="info-label" style="color: #1e3a8a; font-weight:700;">出口内部结算价 (退税让利后)</span>
+      <div class="info-row">
+        <div>
+          <span style="color: #1e3a8a; font-weight:700;">出口内部结算价 (让利退税后)</span>
+          <div style="font-size: 11px; color: #64748b; margin-top: 1px;">公式: 出厂定价 - 退税总额</div>
+        </div>
         <span class="info-val highlight-lg" id="disp_export_transfer" style="color: #1e3a8a;">4,077.42 元</span>
       </div>
     </div>
@@ -922,6 +944,9 @@
     document.getElementById('disp_bom_total').innerText = `${bomTotal.toFixed(2)} 元`;
     document.getElementById('disp_vat_input').innerText = `${vatInput.toFixed(2)} 元`;
 
+    document.getElementById('disp_vat_output').innerText = `${vatOutput.toFixed(2)} 元`;
+    document.getElementById('disp_vat_input_tax').innerText = `-${vatInput.toFixed(2)} 元`;
+    document.getElementById('disp_vat_diff').innerText = `${vatPay.toFixed(2)} 元`;
     document.getElementById('disp_vat_pay').innerText = `${vatSurcharge.toFixed(2)} 元`;
     document.getElementById('disp_domestic_profit').innerText = `${domesticProfit.toFixed(2)} 元 (${domesticPrice > 0 ? ((domesticProfit/domesticPrice)*100).toFixed(1) : 0}%)`;
     document.getElementById('disp_rebate_total').innerText = `${totalRebate.toFixed(2)} 元`;
