@@ -449,9 +449,41 @@
     </div>
 
     <div class="form-group">
-      <label>保护板 (蚂蚁GPS / 4G智能板) <span class="edit-icon">改</span></label>
+      <label>BMS 保护板 (蚂蚁/智能板) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
-        <input type="number" id="bms_price" value="350">
+        <input type="number" id="bms_price" value="144">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>GPS 定位模块 <span class="edit-icon">改</span></label>
+      <div class="input-wrap">
+        <input type="number" id="gps_price" value="95">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>4G 物联网卡 (3年套餐) <span class="edit-icon">改</span></label>
+      <div class="input-wrap">
+        <input type="number" id="sim_4g_price" value="42">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>LCD 显示屏 (2.8寸等) <span class="edit-icon">改</span></label>
+      <div class="input-wrap">
+        <input type="number" id="display_price" value="36">
+        <span class="unit">元</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>配套充电器 (含税随包采购) <span class="edit-icon">改</span></label>
+      <div class="input-wrap">
+        <input type="number" id="charger_price" value="192">
         <span class="unit">元</span>
       </div>
     </div>
@@ -497,6 +529,10 @@
         <span class="info-label">电芯采购合价</span>
         <span class="info-val" id="disp_cell_total">2,352.00 元 (117.60元/片)</span>
       </div>
+      <div class="info-row">
+        <span class="info-label">智能电控小计 (BMS+GPS+4G+屏)</span>
+        <span class="info-val" id="disp_smart_total">317.00 元</span>
+      </div>
       <div class="info-row" style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 4px;">
         <span class="info-label" style="font-weight: 700; color: #1e293b;">★ BOM 总成本 (含13%税)</span>
         <span class="info-val highlight-lg" id="disp_bom_total" style="color: #2563eb;">3,252.00 元</span>
@@ -517,7 +553,7 @@
     <div class="form-group">
       <label>朗泰出厂含税定价 (Transfer Price) <span class="edit-icon">改</span></label>
       <div class="input-wrap">
-        <input type="number" id="domestic_price" value="4350">
+        <input type="number" id="domestic_price" value="4550">
         <span class="unit">元</span>
       </div>
     </div>
@@ -586,16 +622,8 @@
 
   <div class="card">
     <div class="card-header">
-      <span>3. 跨境海运、孟加拉关税与配件</span>
+      <span>3. 跨境海运与孟加拉清关关税</span>
       <span class="tag tag-orange">清关落地</span>
-    </div>
-
-    <div class="form-group">
-      <label>配套专用充电器 (不含税) <span class="edit-icon">改</span></label>
-      <div class="input-wrap">
-        <input type="number" id="charger_price" value="190">
-        <span class="unit">元</span>
-      </div>
     </div>
 
     <div class="form-group">
@@ -743,9 +771,10 @@
 <script>
   const inputIds = [
     'series', 'capacity', 'cell_wh_price', 'cell_piece_override',
-    'bms_price', 'assembly_fee', 'case_price', 'un_box_price', 'accessories_price',
+    'bms_price', 'gps_price', 'sim_4g_price', 'display_price', 'charger_price',
+    'assembly_fee', 'case_price', 'un_box_price', 'accessories_price',
     'domestic_price', 'vat_rebate_rate', 'consumption_rebate_rate',
-    'charger_price', 'net_weight', 'gross_weight', 'container_freight',
+    'net_weight', 'gross_weight', 'container_freight',
     'customs_val_usd', 'usd_cny_rate', 'customs_duty_rate', 'cny_bdt_rate',
     'wholesale_1', 'wholesale_2', 'lease_deposit', 'lease_rent'
   ];
@@ -753,33 +782,37 @@
   const presets = {
     '20S105Ah': {
       series: 20, capacity: 105, cell_wh_price: 0.35, cell_piece_override: '',
-      bms_price: 350, assembly_fee: 200, case_price: 150, un_box_price: 50, accessories_price: 150,
-      domestic_price: 4350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
-      charger_price: 190, net_weight: 56, gross_weight: 60, container_freight: 50000,
+      bms_price: 144, gps_price: 95, sim_4g_price: 42, display_price: 36, charger_price: 192,
+      assembly_fee: 200, case_price: 150, un_box_price: 50, accessories_price: 150,
+      domestic_price: 4550, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      net_weight: 56, gross_weight: 60, container_freight: 50000,
       customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
       wholesale_1: 108000, wholesale_2: 115000, lease_deposit: 45000, lease_rent: 120
     },
     '16S102Ah': {
       series: 16, capacity: 102, cell_wh_price: 0.395, cell_piece_override: 128.93,
-      bms_price: 320, assembly_fee: 160, case_price: 120, un_box_price: 50, accessories_price: 120,
-      domestic_price: 3350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
-      charger_price: 190, net_weight: 45, gross_weight: 48, container_freight: 50000,
+      bms_price: 144, gps_price: 95, sim_4g_price: 42, display_price: 36, charger_price: 192,
+      assembly_fee: 160, case_price: 120, un_box_price: 50, accessories_price: 120,
+      domestic_price: 3550, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      net_weight: 45, gross_weight: 48, container_freight: 50000,
       customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
       wholesale_1: 85000, wholesale_2: 90000, lease_deposit: 35000, lease_rent: 100
     },
     '16S122Ah': {
       series: 16, capacity: 122, cell_wh_price: 0.337, cell_piece_override: 130.22,
-      bms_price: 320, assembly_fee: 175, case_price: 130, un_box_price: 50, accessories_price: 130,
-      domestic_price: 3350, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
-      charger_price: 190, net_weight: 46, gross_weight: 49, container_freight: 50000,
+      bms_price: 144, gps_price: 95, sim_4g_price: 42, display_price: 36, charger_price: 192,
+      assembly_fee: 175, case_price: 130, un_box_price: 50, accessories_price: 130,
+      domestic_price: 3550, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      net_weight: 46, gross_weight: 49, container_freight: 50000,
       customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
       wholesale_1: 93000, wholesale_2: 95000, lease_deposit: 35000, lease_rent: 100
     },
     '20S164.5Ah': {
       series: 20, capacity: 164.5, cell_wh_price: 0.330, cell_piece_override: 173.71,
-      bms_price: 320, assembly_fee: 245, case_price: 180, un_box_price: 50, accessories_price: 167,
-      domestic_price: 5050, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
-      charger_price: 190, net_weight: 72, gross_weight: 75, container_freight: 50000,
+      bms_price: 144, gps_price: 95, sim_4g_price: 42, display_price: 36, charger_price: 192,
+      assembly_fee: 245, case_price: 180, un_box_price: 50, accessories_price: 167,
+      domestic_price: 5250, vat_rebate_rate: 0.06, consumption_rebate_rate: 0.02,
+      net_weight: 72, gross_weight: 75, container_freight: 50000,
       customs_val_usd: 3.0, usd_cny_rate: 6.72, customs_duty_rate: 0.645, cny_bdt_rate: 19.20,
       wholesale_1: 125000, wholesale_2: 130000, lease_deposit: 50000, lease_rent: 150
     }
@@ -875,17 +908,19 @@
     const cellWhPrice = getNum('cell_wh_price', 0.35);
     const cellPieceOverride = getNum('cell_piece_override', 0);
 
-    const bmsPrice = getNum('bms_price', 350);
+    const bmsPrice = getNum('bms_price', 144);
+    const gpsPrice = getNum('gps_price', 95);
+    const sim4gPrice = getNum('sim_4g_price', 42);
+    const displayPrice = getNum('display_price', 36);
+    const chargerPrice = getNum('charger_price', 192);
     const assemblyFee = getNum('assembly_fee', 200);
     const casePrice = getNum('case_price', 150);
     const accessoriesPrice = getNum('accessories_price', 150);
     const unBoxPrice = getNum('un_box_price', 50);
 
-    const domesticPrice = getNum('domestic_price', 4350);
+    const domesticPrice = getNum('domestic_price', 4550);
     const vatRebateRate = getNum('vat_rebate_rate', 0.06);
     const consumptionRebateRate = getNum('consumption_rebate_rate', 0.02);
-
-    const chargerPrice = getNum('charger_price', 190);
     const netWeight = getNum('net_weight', 56);
     const grossWeight = getNum('gross_weight', 60);
     const containerFreight = getNum('container_freight', 50000);
@@ -903,7 +938,8 @@
     const totalEnergyWh = series * capacity * 3.2;
     const cellUnitPrice = cellPieceOverride > 0 ? cellPieceOverride : (cellWhPrice * capacity * 3.2);
     const cellTotal = cellUnitPrice * series;
-    const bomTotal = cellTotal + bmsPrice + assemblyFee + casePrice + accessoriesPrice + unBoxPrice;
+    const smartTotal = bmsPrice + gpsPrice + sim4gPrice + displayPrice;
+    const bomTotal = cellTotal + smartTotal + chargerPrice + assemblyFee + casePrice + accessoriesPrice + unBoxPrice;
     const vatInput = (bomTotal / 1.13) * 0.13;
 
     const vatOutput = domesticPrice - (domesticPrice / 1.13);
@@ -917,7 +953,7 @@
 
     const freightPerPack = (containerFreight / containerCapacity) * grossWeight;
     const customsPerPack = netWeight * customsValUsd * usdCnyRate * customsDutyRate;
-    const landedCostRmb = exportTransferPrice + freightPerPack + customsPerPack + chargerPrice;
+    const landedCostRmb = exportTransferPrice + freightPerPack + customsPerPack;
     const landedCostBdt = landedCostRmb * cnyBdtRate;
 
     const profit1Bdt = wholesale1 - landedCostBdt;
@@ -944,6 +980,7 @@
 
     document.getElementById('disp_energy').innerText = `${Math.round(totalEnergyWh).toLocaleString()} Wh`;
     document.getElementById('disp_cell_total').innerText = `${cellTotal.toFixed(2)} 元 (${cellUnitPrice.toFixed(2)}元/片)`;
+    document.getElementById('disp_smart_total').innerText = `${smartTotal.toFixed(2)} 元`;
     document.getElementById('disp_bom_total').innerText = `${bomTotal.toFixed(2)} 元`;
     document.getElementById('disp_vat_input').innerText = `${vatInput.toFixed(2)} 元`;
 
@@ -1003,6 +1040,8 @@
     if (el) {
       el.addEventListener('input', handleInput);
       el.addEventListener('change', handleInput);
+      el.addEventListener('keyup', handleInput);
+      el.addEventListener('blur', handleInput);
     }
   });
 
